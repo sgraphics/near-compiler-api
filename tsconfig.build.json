@@ -1,0 +1,10 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "noEmit": false,
+        "outDir": "./dist",                                   /* Specify an output folder for all emitted files. */
+    },
+    "exclude": [
+        "**/*.spec.ts"
+    ]
+}
