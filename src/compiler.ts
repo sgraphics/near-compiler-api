@@ -158,7 +158,7 @@ export class CompilerWrapper {
 
         let result;
         try {
-            result = await exec(`npx -- near-sdk-js build "${request.entrypoint}"`, buildOptions);
+            result = await exec(`npx -- near-sdk-js build --verbose "${request.entrypoint}"`, buildOptions);
         } catch (error: any) {
             logObj.error = error.toString();
             logObj.stderr = error.stderr;
