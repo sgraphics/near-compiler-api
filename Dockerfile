@@ -3,6 +3,7 @@ FROM --platform=linux/amd64 ubuntu:22.04
 # Install required packages for running the server
 RUN apt update 
 RUN apt install -y curl sudo
+RUN apt-get -y install git
 RUN curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
 RUN apt install -y nodejs
 

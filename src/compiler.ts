@@ -99,16 +99,32 @@ export class CompilerWrapper {
                 error_type: ErrorType.SERVICE,
             });
         }
-        const packageJson = {
-            "type": "module",
-            "dependencies": {
-                "near-sdk-js": request.sdk_version,
-                // Note: This can be removed once  https://github.com/near/near-sdk-js/issues/284 is resolved
-                "ts-morph": "^16.0.0",
-                "typescript": "^4.8.4",
-                ...request.dependencies
-            },
-        };
+        let packageJson = {};
+        if (request.sdk_version == "develop")
+        {
+            //Run canary build
+            packageJson = {
+                "type": "module",
+                "dependencies": {
+                    "near-sdk-js": "near/near-sdk-js",
+                    "typescript": "^4.8.4",
+                    ...request.dependencies
+                },
+            };
+        }
+        else
+        {
+            packageJson = {
+                "type": "module",
+                "dependencies": {
+                    "near-sdk-js": request.sdk_version,
+                    // Note: This can be removed once  https://github.com/near/near-sdk-js/issues/284 is resolved
+                    "ts-morph": "^16.0.0",
+                    "typescript": "^4.8.4",
+                    ...request.dependencies
+                },
+            };
+        }
         request.files["package.json"] = JSON.stringify(packageJson);
 
         // Copy the filesystem to disk

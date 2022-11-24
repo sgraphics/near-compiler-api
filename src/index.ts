@@ -1,8 +1,11 @@
 import express, { Express, request, Request, Response } from 'express';
 import { CompilerWrapper } from './compiler';
-
+const cors = require('cors');
 const app: Express = express();
 app.use(express.json());
+app.use(cors({
+    origin: '*'
+}));
 
 const port = process.env.PORT;
 
