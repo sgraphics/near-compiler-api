@@ -90,15 +90,15 @@ export class CompilerWrapper {
         }
 
         // Create the package.json
-        if (!VERSION_REGEX.test(request.sdk_version)) {
+        if (request.sdk_version !== "develop" && !VERSION_REGEX.test(request.sdk_version)) {
             logger.error(logObj, `Invalid version name ${request.sdk_version}`);
-
             // Return failure
             return exit({
                 status: CompileStatus.FAILURE,
                 error_type: ErrorType.SERVICE,
             });
         }
+
         let packageJson = {};
         if (request.sdk_version == "develop")
         {
