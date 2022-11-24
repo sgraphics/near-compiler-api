@@ -2,7 +2,7 @@
 
 ## Design 
 - Compiling Near Javascript/Typescript code into WebAssembly is a complex process that is likely to change in upcoming versions. Rather than re-implementing this variable process, it is more reasonable to wrap the CLI build process directly.
-- The CLI build process is dependent on system architecture and somewhat dependent on system libraries. Therefore, it a hypothetical NPM wrapper library is not likely to be portable. Therefore this project opted to create a Docker image which exposes a compiler API service.
+- The CLI build process is dependent on system architecture and somewhat dependent on system libraries. A hypothetical NPM wrapper library is not likely to be portable. Therefore this project opted to create a Docker image which exposes a compiler API service.
 
 ## How does it work?
 - When the Docker image is started, a NodeJS server is started, exposed by default on port 8080.
