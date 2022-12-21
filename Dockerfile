@@ -11,7 +11,8 @@ RUN apt install -y nodejs
 # Install Dependencies
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm i
+RUN npm i pnpm -g
+RUN pnpm i
 
 # Copy Source
 COPY . .

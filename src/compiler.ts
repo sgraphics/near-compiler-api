@@ -150,7 +150,7 @@ export class CompilerWrapper {
             cwd: workdir,
         };
         try {
-            await exec(`npm i --cache "${CompilerWrapper.cache_dir}"`, initOptions);
+            await exec(`pnpm i --cache "${CompilerWrapper.cache_dir}"`, initOptions);
             logger.debug(logObj, 'Successfully initialized build environment.');
         } catch (error: any) {
             logObj.error = error.toString();
@@ -174,7 +174,7 @@ export class CompilerWrapper {
 
         let result;
         try {
-            result = await exec(`npx -- near-sdk-js build --verbose "${request.entrypoint}"`, buildOptions);
+            result = await exec(`pnpm dlx -- near-sdk-js build --verbose "${request.entrypoint}"`, buildOptions);
         } catch (error: any) {
             logObj.error = error.toString();
             logObj.stderr = error.stderr;
