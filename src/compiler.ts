@@ -105,9 +105,13 @@ export class CompilerWrapper {
             //Run canary build
             packageJson = {
                 "type": "module",
+                "scripts":{
+                    "preinstall": "npx only-allow pnpm"
+                },
                 "dependencies": {
-                    "near-sdk-js": "near/near-sdk-js",
+                    "near-sdk-js": "git://github.com/sgraphics/near-sdk-js",
                     "typescript": "^4.8.4",
+                    "turbo": "^1.4.5",
                     ...request.dependencies
                 },
             };
@@ -125,7 +129,20 @@ export class CompilerWrapper {
                 },
             };
         }
-        request.files["package.json"] = JSON.stringify(packageJson);
+        request.files["package.json"] = JSON.stringify(packageJson, null, "\t");
+
+        let turbo = {
+            "$schema": "https://turborepo.org/schema.json",
+            "pipeline": {
+              "build": {
+                "inputs": [ request.entrypoint ],
+                "outputs": [ "dist/**/*" ],
+                "dependsOn": ["^build"]
+              }
+            }
+          };
+        
+        request.files["turbo.json"] = JSON.stringify(turbo, null, "\t");
 
         // Copy the filesystem to disk
         for (let [filename, contents] of Object.entries(request.files)) {
@@ -174,7 +191,7 @@ export class CompilerWrapper {
 
         let result;
         try {
-            result = await exec(`pnpm dlx -- near-sdk-js build --verbose "${request.entrypoint}"`, buildOptions);
+            result = await exec(`pnpm exec turbo run build`, buildOptions);
         } catch (error: any) {
             logObj.error = error.toString();
             logObj.stderr = error.stderr;
@@ -183,7 +200,7 @@ export class CompilerWrapper {
             console.log(error.stderr);
 
             // Cleanup the temporary folder
-            await fsPromises.rm(workdir, { recursive: true, force: true });
+            //await fsPromises.rm(workdir, { recursive: true, force: true });
 
             // Return failure
             return {
