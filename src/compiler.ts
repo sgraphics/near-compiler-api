@@ -107,6 +107,7 @@ export class CompilerWrapper {
                 "type": "module",
                 "dependencies": {
                     "near-sdk-js": "near/near-sdk-js",
+                    //"near-sdk-js": "near/near-sdk-js#e90d9bf9330d0a17cf6c0c215981f377ddadd740",
                     "typescript": "^4.8.4",
                     ...request.dependencies
                 },
